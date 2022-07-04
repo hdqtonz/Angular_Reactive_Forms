@@ -1,0 +1,168 @@
+<div class="container">
+  <div class="card-header bg-success">Reactive Form</div>
+  <div class="myForm">
+    <form [formGroup]="checkoutForm" (ngSubmit)="submit()">
+      <!-- email -->
+      <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+        />
+        <small
+          *ngIf="
+            checkoutForm.controls['email'].hasError('required') &&
+            checkoutForm.controls['email'].touched
+          "
+          >Email address is required</small
+        >
+        <small
+          *ngIf="
+            checkoutForm.controls['email'].touched &&
+            checkoutForm.controls['email'].hasError('email')
+          "
+          >Please Enter Valid Email</small
+        >
+        <small
+          *ngIf="
+            checkoutForm.controls['email'].touched &&
+            checkoutForm.controls['email'].hasError('minlength')
+          "
+        >
+          You email should be more then 8 characters
+        </small>
+      </div>
+
+      <!-- Quantity -->
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Quentity</label>
+        <input
+          type="quentity"
+          formControlName="quentity"
+          class="form-control"
+          id="exampleInputPassword1"
+        />
+        <small
+          *ngIf="
+            checkoutForm.controls['quentity'].invalid &&
+            checkoutForm.controls['email'].touched
+          "
+          >quentity is required</small
+        >
+      </div>
+
+      <!-- Terms checkbox -->
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          formControlName="terms"
+          class="form-check-input"
+          id="exampleCheck1"
+        />
+        <label class="form-check-label" for="exampleCheck1"
+          >Agree to Terms</label
+        >
+      </div>
+
+      <!-- Items with form array object-->
+
+      <div class="md-3">
+        <label class="form-label itemlable text-center" for="exampleitems"
+          >ITEMS</label
+        >
+        <button class="btn btn-sm btn-warning my-3 w-100" (click)="addItem()">
+          + Add
+        </button>
+        <div
+          formArrayName="items"
+          class="col-md-10 justify-content-center mx-auto"
+        >
+          <div
+            *ngFor="let item of itemsFromArray.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div class="itme-style">
+              <a
+                class="btn btn-sm btn-danger w-100 my-2"
+                href=""
+                [routerLink]
+                (click)="removeItem(i)"
+                >Remove</a
+              >
+              <input
+                class="form-control mb-2"
+                name="itemId"
+                formControlName="itemId"
+                type="text"
+                id="task{{ i }}"
+              />
+              <input
+                class="form-control"
+                name="itemName"
+                formControlName="itemName"
+                type="text"
+                id="task{{ i }}"
+              />
+              <input
+                class="form-control my-2"
+                name="itemDesc"
+                formControlName="itemDesc"
+                type="text"
+                id="task{{ i }}"
+              />
+              <input
+                class="form-check-input mb-2"
+                name="itemDone"
+                formControlName="itemDone"
+                type="checkbox"
+              />
+              Make as Done
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- simple Items FormArray -->
+
+      <!-- <div class="mb-3">
+        <label for="form-label">itmes</label>
+        <div formArrayName="items">
+          <div *ngFor="let item of itemsFromArray; let i = index">
+            <input
+              type="text"
+              class="form-control my-2"
+              [formControlName]="i"
+            />
+
+             <button (click)="removeItem(i)" class="btn btn-outline-danger">
+                  X
+                </button>
+          </div>
+         
+          <button (click)="addItem()" class="btn btn-sm btn-warning my-3 w-100">
+            + add
+          </button>
+          
+        </div>
+      </div> -->
+
+      <!-- button -->
+      <button
+        type="submit"
+        [disabled]="checkoutForm.invalid"
+        class="btn btn-primary"
+      >
+        Submit
+      </button>
+
+      <button (click)="resetForm()" type="submit" class="btn btn-primary ms-2">
+        Reset
+      </button>
+    </form>
+
+    <div>Enterd Value is : {{ enterValueChange }}</div>
+  </div>
+</div>
