@@ -39,3 +39,8 @@
 </nav>
 <!-- Navbar end -->
 <router-outlet></router-outlet>
+
+<!-- Child Component -->
+<div class="container">
+  <app-child [myInput]="inputString" (myOutput)="getData($event)"></app-child>
+</div>
